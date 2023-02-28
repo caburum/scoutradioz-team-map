@@ -23,7 +23,7 @@
 				name: 'mercator' // 2d
 			},
 			center: [-81.4205, 39.8282],
-			zoom: 3
+			zoom: 2
 		});
 
 		map.on('load', () => {
@@ -33,19 +33,13 @@
 		for (const team of data.teams) {
 			if (!team.location) return console.error('No location for team', team.team_number);
 
-			let marker;
+			const icon = document.createElement('div');
+			icon.className = 'markerIcon';
 			if (team.avatarLocation) {
-				const icon = document.createElement('div');
-				icon.style.backgroundImage = 'url(/api/avatars.png)';
-				// icon.style.backgroundColor = '#fff';
-				icon.style.width = `${avatarSize}px`;
-				icon.style.height = `${avatarSize}px`;
 				icon.style.backgroundPosition = `-${team.avatarLocation.x}px -${team.avatarLocation.y}px`;
+			} else icon.className += ' first';
 
-				marker = new Marker(icon);
-			} else marker = new Marker();
-
-			marker
+			new Marker(icon)
 				.setLngLat(team.location)
 				.setPopup(new Popup().setText(`Team ${team.team_number}: ${team.nickname}`))
 				.addTo(map);
@@ -53,12 +47,26 @@
 	});
 </script>
 
-<div class="mapContainer" bind:this={mapContainer} />
+<div class="mapContainer" style:--avatar-size={`${avatarSize}px`} bind:this={mapContainer} />
 
 <style>
 	.mapContainer {
 		width: 100%;
 		height: 100%;
 		overflow: hidden;
+	}
+
+	:global(.markerIcon) {
+		background-image: url(/api/avatars.png);
+		background-color: #fff5;
+		border-radius: 2px;
+		width: var(--avatar-size);
+		height: var(--avatar-size);
+	}
+	:global(.markerIcon.first) {
+		background-image: url(/first.svg);
+		background-color: unset;
+		background-position: center;
+		background-repeat: no-repeat;
 	}
 </style>
