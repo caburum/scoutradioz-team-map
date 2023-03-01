@@ -20,9 +20,7 @@ export const load: PageServerLoad = async () => {
 	for (const team of teams) {
 		let locEntry = locations.find((loc) => loc.team_number === team.team_number);
 		if (locEntry) team.location = [locEntry.lng, locEntry.lat];
-		else {
-			team.location = await geocode(tbaToAddress(team));
-		}
+		else team.location = await geocode(tbaToAddress(team));
 
 		team.avatarLocation = avatarData.locations[team.team_number];
 	}

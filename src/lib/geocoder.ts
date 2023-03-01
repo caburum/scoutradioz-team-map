@@ -6,17 +6,25 @@ export const geocodeCache: {
 } = {};
 
 export function tbaToAddress(team: TbaTeam) {
-	return `${team.school_name ?? ''} ${team.city ?? ''} ${team.state_prov ?? ''} ${team.postal_code ?? ''} ${team.country ?? ''}`;
+	return [team.school_name, team.city, team.state_prov, team.postal_code, team.country].filter(Boolean).join(', ');
 }
 
-export async function geocode(address: string): Promise<LngLatLike | undefined> {
+export async function geocode(address: string, retry = false): Promise<LngLatLike | undefined> {
 	if (geocodeCache[address]) return geocodeCache[address];
 	console.log('querying geocoder for', address);
 
 	const data = await (await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(address)}&limit=1`)).json();
 	const coords = data.features?.[0]?.geometry?.coordinates as LngLatLike;
 
+	console.error(data);
+
 	if (coords) geocodeCache[address] = coords;
+	else if (!retry) {
+		// there's some really weird bug but trying with less details seems to work
+		// let newAddress = address.split(', '); newAddress.pop();
+		return await geocode(address.split(', ').slice(1).join(', '), true);
+	}
+
 	return coords;
 }
 

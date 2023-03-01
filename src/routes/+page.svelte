@@ -30,8 +30,12 @@
 			isMapLoaded = true;
 		});
 
+		// console.log(data.teams);
 		for (const team of data.teams) {
-			if (!team.location) return console.error('No location for team', team.team_number);
+			if (!team.location) {
+				console.error('No location for team', team);
+				continue;
+			}
 
 			const icon = document.createElement('div');
 			icon.className = 'markerIcon';
