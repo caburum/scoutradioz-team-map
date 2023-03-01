@@ -11,7 +11,7 @@ type SupplementaryTeamData = {
 };
 
 export const load: PageServerLoad = async () => {
-	let teams: (TbaTeam & SupplementaryTeamData)[] = await getTeamData(teamNumbers.sort().reverse());
+	let teams: (TbaTeam & SupplementaryTeamData)[] = await getTeamData(teamNumbers);
 	// for (const team of teams) team.location = await geocode(tbaToAddress(team));
 
 	const [avatarData, locations] = await Promise.all([getAvatarData(), getLocations()]);
@@ -25,5 +25,5 @@ export const load: PageServerLoad = async () => {
 		team.avatarLocation = avatarData.locations[team.team_number];
 	}
 
-	return { teams };
+	return { teams: teams.sort((a, b) => b.team_number - a.team_number) };
 };

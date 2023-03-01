@@ -22,7 +22,7 @@
 			projection: {
 				name: 'mercator' // 2d
 			},
-			center: [-81.4205, 39.8282],
+			center: [-50, 20],
 			zoom: 2
 		});
 
@@ -43,11 +43,16 @@
 				icon.style.backgroundPosition = `-${team.avatarLocation.x}px -${team.avatarLocation.y}px`;
 			} else icon.className += ' first';
 
+			// requested by impact team, hoist 102 to the top
+			if (team.team_number == 102) icon.style.zIndex = '1';
+
 			new Marker(icon)
 				.setLngLat(team.location)
 				.setPopup(new Popup().setText(`Team ${team.team_number}: ${team.nickname}`))
 				.addTo(map);
 		}
+
+		// map.on('move', () => console.log(map.getCenter()));
 	});
 </script>
 
