@@ -6,6 +6,7 @@ Create a `.env` file for secrets:
 MONGODB_URI=connection string
 MONGODB_DB=database
 PUBLIC_MAPBOX_ACCESS_TOKEN=public from mapbox
+CSV_URL=https://docs.google.com/spreadsheets/d/google-sheet-id-here/gviz/tq?tqx=out:csv&sheet=sheet+name+here
 ```
 
 ## Developing
@@ -17,6 +18,12 @@ To run a local development server: `npm run dev`.
 To create a static production version of the app: `npm run build`.
 
 You can preview the production build with `npm run preview`.
+
+## Continious Deployment
+
+The site is re-built and deployed when the source sheet changes.
+
+[Vercel hook](https://vercel.com/docs/concepts/deployments/deploy-hooks) triggered on Google Sheets change by [Apps Script](https://stackoverflow.com/a/62105239)
 
 ## Roadmap
 
