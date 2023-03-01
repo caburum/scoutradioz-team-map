@@ -7,8 +7,8 @@ const config = {
 
 	kit: {
 		adapter: adapterStatic({
-			pages: 'output',
-			assets: 'output'
+			pages: 'build',
+			assets: 'build'
 		}),
 		alias: {
 			routes: 'src/routes/*',
