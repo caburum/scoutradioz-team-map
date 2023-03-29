@@ -71,6 +71,7 @@
 		border-radius: 2px;
 		width: var(--avatar-size);
 		height: var(--avatar-size);
+		image-rendering: pixelated;
 	}
 	:global(.markerIcon.first) {
 		background-image: url(/first.svg);
