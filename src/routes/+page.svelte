@@ -66,7 +66,7 @@
 	}
 
 	:global(.markerIcon) {
-		background-image: url(/api/avatars.png);
+		background-image: url(/api/avatars.webp);
 		background-color: #fff5;
 		border-radius: 2px;
 		width: var(--avatar-size);
